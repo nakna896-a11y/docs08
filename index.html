@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101820">
+    <title>Driving School UA — Автосимулятор</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="menu" class="menu">
+        <div class="menu-bg"></div>
+        <div class="menu-content">
+            <div class="brand">DRIVING <span>SCHOOL UA</span></div>
+            <div class="menu-label">UKRAINIAN DRIVING SIMULATOR</div>
+
+            <h1>ПОРА<br><span>ЗА РУЛЬ</span></h1>
+            <p class="menu-description">
+                Реалистичный симулятор вождения<br>
+                и обучение правилам дорожного движения Украины
+            </p>
+
+            <div class="selection-panel">
+                <label for="carSelect">ВЫБЕРИ АВТОМОБИЛЬ</label>
+                <select id="carSelect">
+                    <option value="sedan">Городской седан</option>
+                    <option value="hatchback">Компактный хэтчбек</option>
+                    <option value="suv">Внедорожник</option>
+                </select>
+
+                <label>КОРОБКА ПЕРЕДАЧ</label>
+                <div class="transmission">
+                    <button class="trans-btn active" data-mode="manual">
+                        МЕХАНИКА
+                    </button>
+                    <button class="trans-btn" data-mode="auto">
+                        АВТОМАТ
+                    </button>
+                </div>
+
+                <button id="startBtn" class="start-btn">
+                    НАЧАТЬ ВОЖДЕНИЕ <span>➜</span>
+                </button>
+            </div>
+
+            <div class="menu-footer">
+                <span>🇺🇦 UKRAINE</span>
+                <span>VERSION 0.1 — DEMO</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="game" class="game hidden">
+        <div id="scene"></div>
+
+        <div class="top-bar">
+            <button id="backBtn" class="small-btn">✕ ВЫЙТИ</button>
+            <div class="lesson-name">
+                <span class="live-dot"></span>
+                ПРАКТИЧЕСКОЕ ВОЖДЕНИЕ
+            </div>
+            <div class="weather-label">☀ ДЕНЬ</div>
+        </div>
+
+        <div class="hud">
+            <div class="hud-card speed-card">
+                <div class="hud-label">СКОРОСТЬ</div>
+                <div class="speed-number"><span id="speed">0</span><small>км/ч</small></div>
+                <div class="speed-limit">ОГРАНИЧЕНИЕ: 50</div>
+            </div>
+
+            <div class="hud-card gear-card">
+                <div class="hud-label">ПЕРЕДАЧА</div>
+                <div id="gearDisplay" class="gear-number">1</div>
+                <div id="gearMode" class="gear-mode">МЕХАНИКА</div>
+            </div>
+
+            <div class="hud-card rpm-card">
+                <div class="hud-label">ОБОРОТЫ ДВИГАТЕЛЯ</div>
+                <div class="rpm-number"><span id="rpm">850</span><small>RPM</small></div>
+                <div class="rpm-track"><div id="rpmBar"></div></div>
+            </div>
+        </div>
+
+        <div class="instructor">
+            <div class="instructor-icon">👨‍🏫</div>
+            <div>
+                <strong>ИНСТРУКТОР</strong>
+                <p id="instructorText">Добро пожаловать! Пристегни ремень и начинай движение.</p>
+            </div>
+        </div>
+
+        <div class="dashboard-bottom">
+            <div class="indicators">
+                <span id="leftIndicator">◀</span>
+                <span id="headlightIndicator">☼</span>
+                <span id="hazardIndicator">⚠</span>
+                <span id="rightIndicator">▶</span>
+                <span id="seatbeltIndicator">♙</span>
+            </div>
+
+            <div class="control-panel">
+                <div class="steering-controls">
+                    <button class="control-btn steer" data-control="left">◀</button>
+                    <div class="steer-label">РУЛЬ</div>
+                    <button class="control-btn steer" data-control="right">▶</button>
+                </div>
+
+                <div class="pedal-controls">
+                    <button class="control-btn clutch" data-control="clutch" id="clutchBtn">
+                        <span>◉</span> СЦЕПЛЕНИЕ
+                    </button>
+                    <button class="control-btn brake" data-control="brake">
+                        <span>▰</span> ТОРМОЗ
+                    </button>
+                    <button class="control-btn gas" data-control="gas">
+                        <span>▲</span> ГАЗ
+                    </button>
+                </div>
+            </div>
+
+            <div class="right-controls">
+                <button class="car-button" id="leftSignal">◀<small>ПОВОРОТ</small></button>
+                <button class="car-button" id="rightSignal">▶<small>ПОВОРОТ</small></button>
+                <button class="car-button" id="hazardBtn">⚠<small>АВАРИЙКА</small></button>
+                <button class="car-button" id="lightsBtn">☼<small>ФАРЫ</small></button>
+                <button class="car-button" id="wiperBtn">♧<small>ДВОРНИКИ</small></button>
+                <button class="car-button" id="hornBtn">♫<small>СИГНАЛ</small></button>
+                <button class="car-button" id="handbrakeBtn">⛔<small>РУЧНИК</small></button>
+                <button class="car-button" id="beltBtn">♙<small>РЕМЕНЬ</small></button>
+            </div>
+        </div>
+
+        <div id="gearPanel" class="gear-panel">
+            <div class="gear-title">КОРОБКА ПЕРЕДАЧ</div>
+            <div class="gear-buttons">
+                <button data-gear="R">R</button>
+                <button data-gear="N">N</button>
+                <button data-gear="1" class="selected">1</button>
+                <button data-gear="2">2</button>
+                <button data-gear="3">3</button>
+                <button data-gear="4">4</button>
+                <button data-gear="5">5</button>
+            </div>
+            <div class="gear-hint">Нажми сцепление перед переключением</div>
+        </div>
+
+        <div id="autoPanel" class="gear-panel hidden">
+            <div class="gear-title">АВТОМАТИЧЕСКАЯ КПП</div>
+            <div class="gear-buttons">
+                <button data-auto="P">P</button>
+                <button data-auto="R">R</button>
+                <button data-auto="N">N</button>
+                <button data-auto="D" class="selected">D</button>
+            </div>
+        </div>
+
+        <div class="bottom-hint">
+            W A S D — управление · Q / E — поворотники · SPACE — ручник
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
