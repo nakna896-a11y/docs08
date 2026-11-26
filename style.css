@@ -1,0 +1,636 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #101820;
+    color: white;
+    overflow: hidden;
+}
+
+button, select {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+    color: white;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ГЛАВНОЕ МЕНЮ */
+
+.menu {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    overflow-y: auto;
+    background:
+        radial-gradient(ellipse at 75% 48%, #384e59 0%, transparent 40%),
+        linear-gradient(120deg, #101820, #172a34 65%, #263c45);
+}
+
+.menu-bg {
+    position: absolute;
+    right: -5%;
+    bottom: 2%;
+    width: 65%;
+    height: 45%;
+    opacity: 0.25;
+    background: linear-gradient(transparent, #000);
+    transform: skewY(-8deg);
+    border-top: 3px solid #8ca1a7;
+}
+
+.menu-content {
+    position: relative;
+    z-index: 2;
+    width: min(1100px, 90%);
+    margin: auto;
+    padding: 45px 0 30px;
+}
+
+.brand {
+    font-size: 23px;
+    font-weight: 900;
+    letter-spacing: 3px;
+}
+
+.brand span {
+    color: #e3b34e;
+}
+
+.menu-label {
+    color: #a9b7bd;
+    font-size: 11px;
+    letter-spacing: 4px;
+    margin-top: 65px;
+    font-weight: 700;
+}
+
+.menu h1 {
+    font-size: clamp(55px, 9vw, 105px);
+    line-height: 0.95;
+    margin-top: 20px;
+    font-weight: 900;
+    letter-spacing: -5px;
+}
+
+.menu h1 span {
+    color: #e3b34e;
+}
+
+.menu-description {
+    color: #b4c0c5;
+    line-height: 1.8;
+    font-size: 14px;
+    margin-top: 25px;
+}
+
+.selection-panel {
+    width: min(390px, 100%);
+    margin-top: 35px;
+    background: rgba(7, 16, 22, 0.82);
+    border: 1px solid #50616a;
+    border-radius: 14px;
+    padding: 25px;
+    backdrop-filter: blur(12px);
+}
+
+.selection-panel label {
+    display: block;
+    font-size: 10px;
+    color: #aebbc0;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+}
+
+.selection-panel select {
+    width: 100%;
+    padding: 14px;
+    background: #1e303a;
+    color: white;
+    border: 1px solid #52626b;
+    border-radius: 7px;
+    outline: none;
+    margin-bottom: 24px;
+}
+
+.transmission {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.trans-btn {
+    flex: 1;
+    padding: 13px 5px;
+    background: #233640;
+    border: 1px solid #50616a;
+    border-radius: 7px;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.trans-btn.active {
+    background: #d9a83d;
+    color: #17212a;
+    border-color: #e8bc61;
+}
+
+.start-btn {
+    width: 100%;
+    padding: 18px;
+    background: #e4b348;
+    color: #18222a;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    border: 0;
+    border-radius: 7px;
+    transition: 0.2s;
+}
+
+.start-btn:hover {
+    background: #ffcf68;
+    transform: translateY(-2px);
+}
+
+.start-btn span {
+    float: right;
+    font-size: 18px;
+}
+
+.menu-footer {
+    display: flex;
+    justify-content: space-between;
+    max-width: 390px;
+    margin-top: 40px;
+    color: #9aabb2;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+/* ИГРОВОЙ ЭКРАН */
+
+.game {
+    position: fixed;
+    inset: 0;
+    background: #9eb8c2;
+}
+
+#scene {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+#scene canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 17px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(#07131de0, transparent);
+    z-index: 2;
+}
+
+.small-btn {
+    background: #172832cc;
+    border: 1px solid #81929a66;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.lesson-name {
+    font-size: 11px;
+    letter-spacing: 1px;
+    font-weight: 800;
+}
+
+.live-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #59d58c;
+    margin-right: 8px;
+}
+
+.weather-label {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* HUD */
+
+.hud {
+    position: absolute;
+    top: 75px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 2;
+}
+
+.hud-card {
+    min-width: 110px;
+    background: #111e2bcc;
+    border: 1px solid #9eafb74d;
+    padding: 12px 15px;
+    border-radius: 9px;
+    backdrop-filter: blur(8px);
+}
+
+.hud-label {
+    font-size: 8px;
+    color: #b8c5ca;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.speed-number, .rpm-number {
+    font-size: 32px;
+    font-weight: 900;
+    margin-top: 5px;
+    font-variant-numeric: tabular-nums;
+}
+
+.speed-number small, .rpm-number small {
+    font-size: 10px;
+    margin-left: 4px;
+    color: #b8c5ca;
+}
+
+.speed-limit {
+    font-size: 8px;
+    margin-top: 6px;
+    color: #e9b84e;
+}
+
+.gear-number {
+    font-size: 34px;
+    font-weight: 900;
+    margin-top: 2px;
+    color: #e9bd59;
+    text-align: center;
+}
+
+.gear-mode {
+    font-size: 8px;
+    color: #b8c5ca;
+    text-align: center;
+}
+
+.rpm-track {
+    height: 5px;
+    background: #45545c;
+    margin-top: 9px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.rpm-track div {
+    height: 100%;
+    width: 10%;
+    background: #e9b84e;
+    transition: width 0.1s;
+}
+
+/* ИНСТРУКТОР */
+
+.instructor {
+    position: absolute;
+    top: 165px;
+    left: 20px;
+    max-width: 280px;
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    background: #10202dcc;
+    border: 1px solid #71858e55;
+    border-radius: 9px;
+    z-index: 2;
+}
+
+.instructor-icon {
+    font-size: 25px;
+}
+
+.instructor strong {
+    font-size: 9px;
+    color: #e9bd59;
+    letter-spacing: 1px;
+}
+
+.instructor p {
+    font-size: 10px;
+    line-height: 1.5;
+    color: #e2e8e9;
+    margin-top: 5px;
+}
+
+/* НИЖНЯЯ ПАНЕЛЬ */
+
+.dashboard-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    min-height: 165px;
+    z-index: 3;
+    background: linear-gradient(transparent, #09141ff2 28%);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 45px 22px 18px;
+    gap: 15px;
+}
+
+.indicators {
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 25px;
+    font-size: 16px;
+    color: #7e8d93;
+}
+
+.indicators .active {
+    color: #6aff91;
+    text-shadow: 0 0 10px #6aff91;
+}
+
+.control-panel {
+    display: flex;
+    align-items: flex-end;
+    gap: 22px;
+}
+
+.steering-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.steer-label {
+    color: #abbac0;
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.control-btn {
+    border: 1px solid #71828b80;
+    background: #233640e8;
+    border-radius: 9px;
+    min-width: 52px;
+    min-height: 48px;
+    font-size: 16px;
+    font-weight: 900;
+    user-select: none;
+    touch-action: none;
+}
+
+.control-btn:active, .control-btn.pressed {
+    background: #d5a83e;
+    color: #17212a;
+}
+
+.pedal-controls {
+    display: flex;
+    align-items: flex-end;
+    gap: 7px;
+}
+
+.pedal-controls .control-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 68px;
+    min-height: 65px;
+    gap: 5px;
+    font-size: 9px;
+}
+
+.pedal-controls .control-btn span {
+    font-size: 17px;
+}
+
+.clutch {
+    border-bottom: 4px solid #6386b4;
+}
+
+.brake {
+    border-bottom: 4px solid #db6d58;
+}
+
+.gas {
+    border-bottom: 4px solid #5dbb83;
+}
+
+.right-controls {
+    display: grid;
+    grid-template-columns: repeat(4, 55px);
+    gap: 6px;
+}
+
+.car-button {
+    background: #263b46e8;
+    border: 1px solid #75889080;
+    border-radius: 7px;
+    height: 52px;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.car-button small {
+    display: block;
+    font-size: 7px;
+    color: #bdc9cd;
+    margin-top: 3px;
+}
+
+.car-button.active {
+    color: #69ee94;
+    border-color: #69ee94;
+    background: #284c3b;
+}
+
+.bottom-hint {
+    position: absolute;
+    bottom: 175px;
+    right: 22px;
+    font-size: 9px;
+    color: #d1dce0;
+    z-index: 2;
+}
+
+/* ПЕРЕДАЧИ */
+
+.gear-panel {
+    position: absolute;
+    bottom: 180px;
+    left: 22px;
+    z-index: 4;
+    background: #142631ed;
+    padding: 12px;
+    border: 1px solid #72838b66;
+    border-radius: 8px;
+}
+
+.gear-title {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    color: #e9bd59;
+}
+
+.gear-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.gear-buttons button {
+    width: 33px;
+    height: 33px;
+    background: #30434d;
+    border: 1px solid #667780;
+    border-radius: 5px;
+    font-weight: 800;
+}
+
+.gear-buttons button.selected {
+    background: #e4b348;
+    color: #18222a;
+}
+
+.gear-hint {
+    font-size: 8px;
+    color: #b4c0c5;
+    margin-top: 8px;
+}
+
+@media(max-width: 850px) {
+    .dashboard-bottom {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        padding: 45px 8px 10px;
+    }
+
+    .control-panel {
+        gap: 8px;
+    }
+
+    .right-controls {
+        grid-template-columns: repeat(4, 43px);
+    }
+
+    .car-button {
+        height: 43px;
+        font-size: 14px;
+    }
+
+    .car-button small {
+        font-size: 6px;
+    }
+
+    .pedal-controls .control-btn {
+        min-width: 52px;
+    }
+
+    .gear-panel {
+        bottom: 175px;
+        left: 8px;
+    }
+
+    .bottom-hint {
+        display: none;
+    }
+
+    .hud {
+        left: 8px;
+        top: 65px;
+        gap: 5px;
+    }
+
+    .hud-card {
+        min-width: 85px;
+        padding: 9px;
+    }
+
+    .instructor {
+        top: 150px;
+        left: 8px;
+        max-width: 210px;
+    }
+
+    .menu-content {
+        padding-top: 25px;
+    }
+
+    .menu-label {
+        margin-top: 40px;
+    }
+}
+
+@media(max-width: 480px) {
+    .hud-card {
+        min-width: 75px;
+    }
+
+    .speed-number, .rpm-number {
+        font-size: 25px;
+    }
+
+    .right-controls {
+        grid-template-columns: repeat(4, 1fr);
+        width: 100%;
+    }
+
+    .right-controls .car-button {
+        min-width: 0;
+    }
+
+    .dashboard-bottom {
+        min-height: 205px;
+    }
+
+    .gear-panel {
+        bottom: 210px;
+    }
+
+    .control-panel {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .menu h1 {
+        letter-spacing: -3px;
+    }
+}
