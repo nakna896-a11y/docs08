@@ -1,138 +1,61 @@
-
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#101820">
-    <title>Driving School UA</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Автосимулятор: місто і ПДД України</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <div id="menu">
-        <div class="menu-content">
-            <div class="logo">DRIVING <span>SCHOOL UA</span></div>
-            <div class="eyebrow">UKRAINIAN DRIVING SIMULATOR</div>
-            <h1>ТВОЙ ГОРОД.<br><span>ТВОИ ПРАВИЛА.</span></h1>
-            <p>Практика вождения и изучение ПДД Украины</p>
-
-            <div class="menu-card">
-                <label>АВТОМОБИЛЬ</label>
-                <select id="carSelect">
-                    <option value="sedan">Городской седан</option>
-                    <option value="hatchback">Хэтчбек</option>
-                    <option value="suv">Внедорожник</option>
-                </select>
-
-                <label>КОРОБКА ПЕРЕДАЧ</label>
-                <div class="transmission">
-                    <button class="trans-btn active" data-mode="manual">МЕХАНИКА</button>
-                    <button class="trans-btn" data-mode="auto">АВТОМАТ</button>
-                </div>
-
-                <button id="startBtn" class="start-btn">НАЧАТЬ ВОЖДЕНИЕ →</button>
-            </div>
-
-            <div class="menu-bottom">🇺🇦 UKRAINE · VERSION 0.2</div>
-        </div>
+<div id="cab">
+  <div id="windshield">
+    <canvas id="scene"></canvas>
+    <div id="hud"><div id="limitSign">50</div><div id="score">Бали: 100</div></div>
+    <div id="toast"></div>
+    <div id="mirror"><canvas id="mC" width="240" height="60"></canvas></div>
+    <canvas id="mL" class="side" width="90" height="70"></canvas>
+    <canvas id="mR" class="side" width="90" height="70"></canvas>
+    <div id="flash"></div>
+  </div>
+  <div id="dash">
+    <canvas id="gauges" width="420" height="190"></canvas>
+    <div id="wheelBox"><div id="wheel"><i></i></div></div>
+    <div id="panel">
+      <div class="row">
+        <button data-a="engine">🔑 Двигун (I)</button>
+        <button data-a="sL">⬅ (Q)</button>
+        <button data-a="haz">⚠ (H)</button>
+        <button data-a="sR">➡ (E)</button>
+        <button data-a="lights">💡 (L)</button>
+        <button data-a="wipers">🌧 (V)</button>
+        <button data-a="horn">📯 (C)</button>
+        <button data-a="belt">🔒 (B)</button>
+        <button data-a="hb">✋ Ручник (Пробіл)</button>
+      </div>
+      <div class="hint" id="hint"></div>
     </div>
+  </div>
+</div>
 
-    <div id="game" class="hidden">
-        <div id="scene"></div>
-
-        <header class="topbar">
-            <button id="exitBtn">✕ ВЫЙТИ</button>
-            <div class="lesson"><span></span> ГОРОДСКОЕ ВОЖДЕНИЕ</div>
-            <div id="clock">ДЕНЬ ☀</div>
-        </header>
-
-        <div class="hud">
-            <div class="hud-card">
-                <small>СКОРОСТЬ</small>
-                <div><strong id="speed">0</strong> <small>км/ч</small></div>
-                <em>ОГРАНИЧЕНИЕ 50</em>
-            </div>
-            <div class="hud-card gear-card">
-                <small>ПЕРЕДАЧА</small>
-                <strong id="gearDisplay">1</strong>
-                <em id="gearMode">МЕХАНИКА</em>
-            </div>
-            <div class="hud-card">
-                <small>ОБОРОТЫ</small>
-                <div><strong id="rpm">850</strong> <small>RPM</small></div>
-                <div class="rpm-track"><div id="rpmBar"></div></div>
-            </div>
-        </div>
-
-        <div class="instructor">
-            <div class="teacher-icon">👨‍🏫</div>
-            <div>
-                <b>ИНСТРУКТОР</b>
-                <p id="message">Пристегни ремень безопасности и приготовься к поездке.</p>
-            </div>
-        </div>
-
-        <div class="status-row">
-            <span id="signalStatus">● ПОВОРОТНИКИ ВЫКЛ.</span>
-            <span id="beltStatus">● РЕМЕНЬ НЕ ПРИСТЁГНУТ</span>
-            <span id="brakeStatus">● РУЧНИК ВКЛЮЧЁН</span>
-        </div>
-
-        <div class="bottom-panel">
-            <div class="steering-area">
-                <button class="control steer" data-control="left">◀</button>
-                <span>РУЛЬ</span>
-                <button class="control steer" data-control="right">▶</button>
-            </div>
-
-            <div class="pedals">
-                <button class="control clutch" data-control="clutch" id="clutchBtn">
-                    СЦЕПЛЕНИЕ
-                </button>
-                <button class="control brake" data-control="brake">ТОРМОЗ</button>
-                <button class="control gas" data-control="gas">ГАЗ</button>
-            </div>
-
-            <div class="car-controls">
-                <button id="leftSignal">◀<small>ПОВОРОТ</small></button>
-                <button id="rightSignal">▶<small>ПОВОРОТ</small></button>
-                <button id="hazardBtn">⚠<small>АВАРИЙКА</small></button>
-                <button id="lightsBtn">☼<small>ФАРЫ</small></button>
-                <button id="hornBtn">♫<small>СИГНАЛ</small></button>
-                <button id="handbrakeBtn">⛔<small>РУЧНИК</small></button>
-                <button id="beltBtn">♙<small>РЕМЕНЬ</small></button>
-            </div>
-        </div>
-
-        <div class="gear-panel" id="manualPanel">
-            <small>МЕХАНИЧЕСКАЯ КПП</small>
-            <div>
-                <button data-gear="R">R</button>
-                <button data-gear="N">N</button>
-                <button data-gear="1" class="selected">1</button>
-                <button data-gear="2">2</button>
-                <button data-gear="3">3</button>
-                <button data-gear="4">4</button>
-                <button data-gear="5">5</button>
-            </div>
-        </div>
-
-        <div class="gear-panel hidden" id="autoPanel">
-            <small>АВТОМАТИЧЕСКАЯ КПП</small>
-            <div>
-                <button data-auto="P" class="selected">P</button>
-                <button data-auto="R">R</button>
-                <button data-auto="N">N</button>
-                <button data-auto="D">D</button>
-            </div>
-        </div>
-
-        <div class="key-hint">
-            W/S — газ и тормоз · A/D — руль · Q/E — поворотники · SPACE — ручник
-        </div>
+<div id="menu" class="overlay">
+  <div class="card">
+    <h1>🚗 Автосимулятор: місто + ПДД України</h1>
+    <p>Їдь містом, дотримуйся світлофорів, знаків і розмітки. За порушення знімаються бали, а після перехресть задаються питання з ПДД.</p>
+    <button class="big" id="startM">⚙️ Механіка</button>
+    <button class="big" id="startA">🅰️ Автомат</button>
+    <div class="help">
+      <b>Керування (клавіатура):</b><br>
+      ↑ / W — вперед (газ) · ↓ / S — гальмо і назад · ← → / A D — кермо<br>
+      Пробіл — ручник · I — двигун · Q / E — поворотники · H — аварійка<br>
+      L — фари · V — двірники · C — сигнал · B — ремінь<br>
+      <b>Механіка:</b> Shift — зчеплення, 1–5 передачі, 0 — нейтраль, R — задня<br>
+      <b>Автомат:</b> двигун уже заведений, просто ↑ і ↓.<br>
+      <i>Обгін: увімкни лівий поворотник (Q), об'їдь повільну машину ліворуч і повернись у свою смугу. Паркування: зупинись на майданчику зі знаком P і підніми ручник.</i>
     </div>
-
-    <script type="module" src="script.js"></script>
+  </div>
+</div>
+<div id="quiz" class="overlay" hidden><div class="card"><h3>📚 Питання з ПДД</h3><p id="qq"></p><div id="qo"></div><p id="qe"></p><button class="big" id="qc" hidden>Продовжити</button></div></div>
+<div id="end" class="overlay" hidden><div class="card"><h1>❌ Іспит не складено</h1><p>Бали закінчилися. Повтори правила й спробуй ще!</p><button class="big" onclick="location.reload()">Спробувати знову</button></div></div>
+<script src="script.js"></script>
 </body>
 </html>
